@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <TreeView />
+  <div class="flex justify-center pt-10 mt-10">
+    <TreeView/>
   </div>
 </template>
 
