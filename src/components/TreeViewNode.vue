@@ -15,7 +15,7 @@
           {{ item.discoveredIssues }}
         </span>
         <span v-if="item.discoveredIssues > 0" class="text-red-600 px-2">
-          {{ getTotalIssueCount(0) }}
+          {{ getTotalIssueCount(item) }}
         </span>
       </div>
       <div v-if="item.children.length > 0 && showChildren" class="ml-10">
@@ -58,18 +58,13 @@ export default {
     toggleChildren() {
       this.showChildren = !this.showChildren;
     },
-    getTotalIssueCount() {
-      if (this.item.children.length <= 0) {
+    getTotalIssueCount(node) {
+      if (node.children.length <= 0) {
         return null;
       } else {
         let total = 0;
-        this.item.children.forEach((child) => {
-          if (this.item.children.length) {
-            // Make a recursive call here
-            total += child.discoveredIssues;
-          } else {
-            total += child.discoveredIssues;
-          }
+        node.children.forEach((child) => {
+          total += child.discoveredIssues + this.getTotalIssueCount(child)
         });
         return total;
       }
